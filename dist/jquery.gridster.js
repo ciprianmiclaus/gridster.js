@@ -1,6 +1,6 @@
-/*! gridster.js - v0.5.6 - 2014-09-25
+/*! gridster.js - v0.5.7 - 2016-02-28
 * http://gridster.net/
-* Copyright (c) 2014 ducksboard; Licensed MIT */
+* Copyright (c) 2016 ducksboard; Licensed MIT */
 
 ;(function(root, factory) {
 
@@ -532,7 +532,7 @@
         this.pointer_events = {
             start: this.nsEvent('touchstart') + ' ' + this.nsEvent('mousedown'),
             move: this.nsEvent('touchmove') + ' ' + this.nsEvent('mousemove'),
-            end: this.nsEvent('touchend') + ' ' + this.nsEvent('mouseup'),
+            end: this.nsEvent('touchend') + ' ' + this.nsEvent('mouseup')
         };
 
         this.$container.on(this.nsEvent('selectstart'),
@@ -970,7 +970,7 @@
     *        `[min_cols_occupied, min_rows_occupied]`
     *       @param {Function} [options.resize.start] Function executed
     *        when resizing starts.
-    *       @param {Function} [options.resize.resize] Function executed
+    *       @param {Function} [otions.resize.resize] Function executed
     *        during the resizing.
     *       @param {Function} [options.resize.stop] Function executed
     *        when resizing stops.
@@ -1686,7 +1686,7 @@
     *  than the original.
     */
     fn.register_widget = function($el) {
-        var isDOM = $el instanceof jQuery;
+        var isDOM = $el instanceof $;
         var wgd = isDOM ? this.dom_to_coords($el) : $el;
         var posChanged = false;
         isDOM || ($el = wgd.el);
@@ -3807,7 +3807,7 @@
     */
     fn.add_faux_rows = function(rows) {
         var actual_rows = this.rows;
-        var max_rows = actual_rows + (rows || 1);
+        var max_rows = actual_rows + (parseInt(rows) || 1);
 
         for (var r = max_rows; r > actual_rows; r--) {
             for (var c = this.cols; c >= 1; c--) {
@@ -3833,7 +3833,7 @@
     */
     fn.add_faux_cols = function(cols) {
         var actual_cols = this.cols;
-        var max_cols = actual_cols + (cols || 1);
+        var max_cols = actual_cols + (parseInt(cols) || 1);
         max_cols = Math.min(max_cols, this.options.max_cols);
 
         for (var c = actual_cols + 1; c <= max_cols; c++) {
@@ -3963,6 +3963,10 @@
 
         if (this.drag_api) {
             this.drag_api.destroy();
+        }
+
+        if (this.resize_api) {
+            this.resize_api.destroy();
         }
 
         this.remove_style_tags();
